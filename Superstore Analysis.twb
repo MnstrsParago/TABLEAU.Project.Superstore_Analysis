@@ -18,6 +18,17 @@
     <preference name='ui.shelf.height' value='26' />
   </preferences>
   <datasources>
+    <datasource hasconnection='false' inline='true' name='Parameters' version='18.1'>
+      <aliases enabled='yes' />
+      <column caption='Metric Selector' datatype='string' name='[Parameter 1]' param-domain-type='list' role='measure' type='nominal' value='&quot;Sales&quot;'>
+        <calculation class='tableau' formula='&quot;Sales&quot;' />
+        <members>
+          <member value='&quot;Sales&quot;' />
+          <member value='&quot;Profit&quot;' />
+          <member value='&quot;Orders&quot;' />
+        </members>
+      </column>
+    </datasource>
     <datasource caption='Orders (sample_-_superstore)' inline='true' name='federated.0shq92d1xdkyf814zy4gy1idrgma' version='18.1'>
       <connection class='federated'>
         <named-connections>
@@ -532,6 +543,9 @@
         </metadata-records>
       </connection>
       <aliases enabled='yes' />
+      <column caption='Selected Metric' datatype='real' name='[Calculation_2292613744581808128]' role='measure' type='quantitative'>
+        <calculation class='tableau' formula='CASE [Parameters].[Parameter 1]&#13;&#10;  WHEN &quot;Sales&quot; THEN SUM([Sales])&#13;&#10;  WHEN &quot;Profit&quot; THEN SUM([Profit])&#13;&#10;  WHEN &quot;Orders&quot; THEN COUNTD([Order ID])&#13;&#10;END' />
+      </column>
       <column datatype='string' name='[City]' role='dimension' semantic-role='[City].[Name]' type='nominal' />
       <column datatype='string' name='[Country]' role='dimension' semantic-role='[Country].[ISO3166_2]' type='nominal' />
       <column aggregation='Sum' datatype='integer' default-format='*00000' name='[Postal Code]' role='dimension' semantic-role='[ZipCode].[Name]' type='ordinal' />
@@ -949,6 +963,11 @@
       <semantic-values>
         <semantic-value key='[Country].[Name]' value='&quot;Anguilla&quot;' />
       </semantic-values>
+      <datasource-dependencies datasource='Parameters'>
+        <column caption='Metric Selector' datatype='string' name='[Parameter 1]' param-domain-type='list' role='measure' type='nominal' value='&quot;Sales&quot;'>
+          <calculation class='tableau' formula='&quot;Sales&quot;' />
+        </column>
+      </datasource-dependencies>
       <object-graph>
         <objects>
           <object caption='Orders' id='Orders_AD0AC018A97C4729BC2181FFA29DFE77'>
